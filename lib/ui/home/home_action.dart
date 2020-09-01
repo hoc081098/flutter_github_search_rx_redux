@@ -44,13 +44,26 @@ class RetryAction implements HomeAction {
 // Side effect actions
 //
 
+abstract class TextChangedAction
+    implements Built<TextChangedAction, TextChangedActionBuilder>, HomeAction {
+  String get term;
+
+  TextChangedAction._();
+
+  factory TextChangedAction([void Function(TextChangedActionBuilder) updates]) =
+      _$TextChangedAction;
+
+  @override
+  HomeState reduce(HomeState state) => state;
+}
+
 abstract class SearchLoadingAction
     implements
         Built<SearchLoadingAction, SearchLoadingActionBuilder>,
         HomeAction {
   String get term;
 
-  int get page;
+  int get nextPage;
 
   SearchLoadingAction._();
 
@@ -60,7 +73,7 @@ abstract class SearchLoadingAction
 
   @override
   HomeState reduce(HomeState state) {
-    if (page == 1) {
+    if (nextPage == 1) {
       return state.rebuild((b) => b
         ..term = term
         ..page = 0
@@ -97,8 +110,16 @@ abstract class SearchSuccessAction
         ..page = state.page + (items.isEmpty ? 0 : 1)
         ..term = term
         ..items = (b.items
-          ..update(
-              (ib) => state.isFirstPage ? ib.replace(items) : ib.addAll(items)))
+          ..update((ib) {
+            if (state.isFirstPage) {
+              ib.replace(items);
+            } else {
+              final urls = Set.of(state.items.map((item) => item.htmlUrl));
+              final distinctItems =
+                  items.where((item) => urls.add(item.htmlUrl));
+              ib.addAll(distinctItems);
+            }
+          }))
         ..error = null
         ..isLoading = false,
     );
@@ -124,7 +145,6 @@ abstract class SearchFailureAction
   HomeState reduce(HomeState state) {
     return state.rebuild(
       (b) => b
-        ..items = ListBuilder<RepoItem>()
         ..term = term
         ..error = error
         ..isLoading = false,

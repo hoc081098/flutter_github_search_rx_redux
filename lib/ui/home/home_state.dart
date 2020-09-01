@@ -28,4 +28,13 @@ abstract class HomeState implements Built<HomeState, HomeStateBuilder> {
       );
 
   bool get isFirstPage => page == 0;
+
+  bool get canLoadNextPage =>
+      !isLoading &&
+      error == null &&
+      items.isNotEmpty &&
+      term.isNotEmpty &&
+      page > 0;
+
+  bool get canRetry => !isLoading && error != null;
 }

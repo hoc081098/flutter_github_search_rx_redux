@@ -83,22 +83,101 @@ class SearchActionBuilder
   }
 }
 
+class _$TextChangedAction extends TextChangedAction {
+  @override
+  final String term;
+
+  factory _$TextChangedAction(
+          [void Function(TextChangedActionBuilder) updates]) =>
+      (new TextChangedActionBuilder()..update(updates)).build();
+
+  _$TextChangedAction._({this.term}) : super._() {
+    if (term == null) {
+      throw new BuiltValueNullFieldError('TextChangedAction', 'term');
+    }
+  }
+
+  @override
+  TextChangedAction rebuild(void Function(TextChangedActionBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TextChangedActionBuilder toBuilder() =>
+      new TextChangedActionBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TextChangedAction && term == other.term;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, term.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TextChangedAction')..add('term', term))
+        .toString();
+  }
+}
+
+class TextChangedActionBuilder
+    implements Builder<TextChangedAction, TextChangedActionBuilder> {
+  _$TextChangedAction _$v;
+
+  String _term;
+  String get term => _$this._term;
+  set term(String term) => _$this._term = term;
+
+  TextChangedActionBuilder();
+
+  TextChangedActionBuilder get _$this {
+    if (_$v != null) {
+      _term = _$v.term;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TextChangedAction other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$TextChangedAction;
+  }
+
+  @override
+  void update(void Function(TextChangedActionBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TextChangedAction build() {
+    final _$result = _$v ?? new _$TextChangedAction._(term: term);
+    replace(_$result);
+    return _$result;
+  }
+}
+
 class _$SearchLoadingAction extends SearchLoadingAction {
   @override
   final String term;
   @override
-  final int page;
+  final int nextPage;
 
   factory _$SearchLoadingAction(
           [void Function(SearchLoadingActionBuilder) updates]) =>
       (new SearchLoadingActionBuilder()..update(updates)).build();
 
-  _$SearchLoadingAction._({this.term, this.page}) : super._() {
+  _$SearchLoadingAction._({this.term, this.nextPage}) : super._() {
     if (term == null) {
       throw new BuiltValueNullFieldError('SearchLoadingAction', 'term');
     }
-    if (page == null) {
-      throw new BuiltValueNullFieldError('SearchLoadingAction', 'page');
+    if (nextPage == null) {
+      throw new BuiltValueNullFieldError('SearchLoadingAction', 'nextPage');
     }
   }
 
@@ -116,19 +195,19 @@ class _$SearchLoadingAction extends SearchLoadingAction {
     if (identical(other, this)) return true;
     return other is SearchLoadingAction &&
         term == other.term &&
-        page == other.page;
+        nextPage == other.nextPage;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, term.hashCode), page.hashCode));
+    return $jf($jc($jc(0, term.hashCode), nextPage.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SearchLoadingAction')
           ..add('term', term)
-          ..add('page', page))
+          ..add('nextPage', nextPage))
         .toString();
   }
 }
@@ -141,16 +220,16 @@ class SearchLoadingActionBuilder
   String get term => _$this._term;
   set term(String term) => _$this._term = term;
 
-  int _page;
-  int get page => _$this._page;
-  set page(int page) => _$this._page = page;
+  int _nextPage;
+  int get nextPage => _$this._nextPage;
+  set nextPage(int nextPage) => _$this._nextPage = nextPage;
 
   SearchLoadingActionBuilder();
 
   SearchLoadingActionBuilder get _$this {
     if (_$v != null) {
       _term = _$v.term;
-      _page = _$v.page;
+      _nextPage = _$v.nextPage;
       _$v = null;
     }
     return this;
@@ -171,7 +250,8 @@ class SearchLoadingActionBuilder
 
   @override
   _$SearchLoadingAction build() {
-    final _$result = _$v ?? new _$SearchLoadingAction._(term: term, page: page);
+    final _$result =
+        _$v ?? new _$SearchLoadingAction._(term: term, nextPage: nextPage);
     replace(_$result);
     return _$result;
   }

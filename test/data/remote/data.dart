@@ -33,6 +33,11 @@ final searchResult = SearchResult(
   ],
 );
 
+final colorsRaw = {
+  'Dart': {'color': '#00B4AB'},
+  'Kotlin': {'color': '#F18E33'},
+};
+
 final colors = {
   'Dart': Color(0xFF00B4AB),
   'Kotlin': Color(0xFFF18E33),

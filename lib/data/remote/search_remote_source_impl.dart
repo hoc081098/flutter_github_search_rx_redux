@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter_github_search_rx_redux/data/remote/search_result.dart';
+import 'package:http/http.dart' as http;
 
 import 'search_remote_source.dart';
-import 'package:http/http.dart' as http;
 
 class SearchRemoteSourceImpl implements SearchRemoteSource {
   final http.Client _client;
@@ -18,6 +18,7 @@ class SearchRemoteSourceImpl implements SearchRemoteSource {
       'search/repositories',
       {'q': term, 'page': page.toString()},
     );
+    print('SearchRemoteSourceImpl: ${url.queryParameters}');
     final response = await _client.get(url);
 
     if (response.statusCode != HttpStatus.ok) {

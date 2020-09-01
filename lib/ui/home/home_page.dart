@@ -33,9 +33,13 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
   }
 
   void subscribe(RxReduxStore<HomeAction, HomeState> store) {
+    store.stateStream
+        .listen((state) => print('Page: ${state.page}'))
+        .disposedBy(bag);
+
     store.actionStream.listen((action) {
       if (action is SearchFailureAction) {
-        key.snackBar('Error: ${action.error}');
+        key.snackBar('Error occurred');
       }
     }).disposedBy(bag);
   }
@@ -104,7 +108,8 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
                             width: 128,
                             height: 48,
                             child: RaisedButton(
-                              onPressed: () => store.dispatch(RetryAction()),
+                              onPressed: () =>
+                                  store.dispatch(const RetryAction()),
                               child: Text('Retry'),
                               elevation: 12,
                               shape: RoundedRectangleBorder(
@@ -162,9 +167,29 @@ class RepoItemsListWidget extends StatelessWidget {
         }
 
         if (state.error != null) {
-          return ListTile(
-            title: Text(
-                "Search for '${state.term}', page: ${state.page + 1} error: ${state.error}"),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text(
+                  "Search for '${state.term}', page: ${state.page + 1} error: ${state.error}",
+                  style: Theme.of(context).textTheme.subtitle2,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: 128,
+                  height: 48,
+                  child: RaisedButton(
+                    onPressed: () => dispatch(const RetryAction()),
+                    child: Text('Retry'),
+                    elevation: 12,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                  ),
+                ),
+              ],
+            ),
           );
         }
 
@@ -184,10 +209,16 @@ class RepoItemsListWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Center(
-            child: RaisedButton(
-              onPressed: () => dispatch(const LoadNextPageAction()),
-              padding: const EdgeInsets.all(12),
-              child: Text('Load next page'),
+            child: SizedBox(
+              width: 128,
+              height: 48,
+              child: RaisedButton(
+                onPressed: () => dispatch(const LoadNextPageAction()),
+                child: Text('Load next page'),
+                elevation: 12,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24)),
+              ),
             ),
           ),
         );
