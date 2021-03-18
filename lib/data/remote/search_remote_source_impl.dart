@@ -23,7 +23,7 @@ class SearchRemoteSourceImpl implements SearchRemoteSource {
 
     if (response.statusCode != HttpStatus.ok) {
       throw HttpException(
-        'Search for term: $term and page: $page failed with status code: ${response.statusCode}',
+        'Search for term: $term and page: $page failed with status code: ${response.statusCode}, response body: ${response.body}',
         uri: url,
       );
     }
