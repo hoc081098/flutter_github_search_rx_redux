@@ -6,23 +6,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart' show TypeMatcher;
-import 'data.dart';
 
-class MockClient extends Mock implements http.Client {}
+import '../../mocks.mocks.dart';
+import 'data.dart';
 
 void main() {
   group('SearchRemoteSourceImpl', () {
     const baseUrl = 'github.com';
 
-    Uri getUri(String unencodedPath, {Map<String, String> queryParameters}) =>
+    Uri getUri(String unencodedPath, {Map<String, String>? queryParameters}) =>
         Uri.https(
           baseUrl,
           unencodedPath,
           queryParameters,
         );
 
-    SearchRemoteSourceImpl remoteSource;
-    MockClient client;
+    late SearchRemoteSourceImpl remoteSource;
+    late MockClient client;
 
     setUpAll(() {
       client = MockClient();
@@ -63,7 +63,7 @@ void main() {
         return http.Response(body, 500);
       });
 
-      Object error;
+      Object? error;
       try {
         await remoteSource.search(term, page);
       } catch (e) {
@@ -88,7 +88,7 @@ void main() {
         throw SocketException(errorMessage);
       });
 
-      Object error;
+      Object? error;
       try {
         await remoteSource.search(term, page);
       } catch (e) {

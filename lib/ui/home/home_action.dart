@@ -132,7 +132,6 @@ abstract class SearchFailureAction
         HomeAction {
   String get term;
 
-  @nullable
   Object get error;
 
   SearchFailureAction._();

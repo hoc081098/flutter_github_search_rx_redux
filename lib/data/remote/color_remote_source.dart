@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:built_collection/built_collection.dart';
+
 abstract class ColorRemoteSource {
-  Future<Map<String, Color>> getColors();
+  Future<BuiltMap<String, Color>> getColors();
 }

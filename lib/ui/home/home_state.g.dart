@@ -16,25 +16,22 @@ class _$HomeState extends HomeState {
   @override
   final bool isLoading;
   @override
-  final Object error;
+  final Object? error;
 
-  factory _$HomeState([void Function(HomeStateBuilder) updates]) =>
+  factory _$HomeState([void Function(HomeStateBuilder)? updates]) =>
       (new HomeStateBuilder()..update(updates)).build();
 
-  _$HomeState._({this.page, this.term, this.items, this.isLoading, this.error})
+  _$HomeState._(
+      {required this.page,
+      required this.term,
+      required this.items,
+      required this.isLoading,
+      this.error})
       : super._() {
-    if (page == null) {
-      throw new BuiltValueNullFieldError('HomeState', 'page');
-    }
-    if (term == null) {
-      throw new BuiltValueNullFieldError('HomeState', 'term');
-    }
-    if (items == null) {
-      throw new BuiltValueNullFieldError('HomeState', 'items');
-    }
-    if (isLoading == null) {
-      throw new BuiltValueNullFieldError('HomeState', 'isLoading');
-    }
+    BuiltValueNullFieldError.checkNotNull(page, 'HomeState', 'page');
+    BuiltValueNullFieldError.checkNotNull(term, 'HomeState', 'term');
+    BuiltValueNullFieldError.checkNotNull(items, 'HomeState', 'items');
+    BuiltValueNullFieldError.checkNotNull(isLoading, 'HomeState', 'isLoading');
   }
 
   @override
@@ -76,38 +73,39 @@ class _$HomeState extends HomeState {
 }
 
 class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
-  _$HomeState _$v;
+  _$HomeState? _$v;
 
-  int _page;
-  int get page => _$this._page;
-  set page(int page) => _$this._page = page;
+  int? _page;
+  int? get page => _$this._page;
+  set page(int? page) => _$this._page = page;
 
-  String _term;
-  String get term => _$this._term;
-  set term(String term) => _$this._term = term;
+  String? _term;
+  String? get term => _$this._term;
+  set term(String? term) => _$this._term = term;
 
-  ListBuilder<RepoItem> _items;
+  ListBuilder<RepoItem>? _items;
   ListBuilder<RepoItem> get items =>
       _$this._items ??= new ListBuilder<RepoItem>();
-  set items(ListBuilder<RepoItem> items) => _$this._items = items;
+  set items(ListBuilder<RepoItem>? items) => _$this._items = items;
 
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
+  bool? _isLoading;
+  bool? get isLoading => _$this._isLoading;
+  set isLoading(bool? isLoading) => _$this._isLoading = isLoading;
 
-  Object _error;
-  Object get error => _$this._error;
-  set error(Object error) => _$this._error = error;
+  Object? _error;
+  Object? get error => _$this._error;
+  set error(Object? error) => _$this._error = error;
 
   HomeStateBuilder();
 
   HomeStateBuilder get _$this {
-    if (_$v != null) {
-      _page = _$v.page;
-      _term = _$v.term;
-      _items = _$v.items?.toBuilder();
-      _isLoading = _$v.isLoading;
-      _error = _$v.error;
+    final $v = _$v;
+    if ($v != null) {
+      _page = $v.page;
+      _term = $v.term;
+      _items = $v.items.toBuilder();
+      _isLoading = $v.isLoading;
+      _error = $v.error;
       _$v = null;
     }
     return this;
@@ -115,14 +113,12 @@ class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
 
   @override
   void replace(HomeState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HomeState;
   }
 
   @override
-  void update(void Function(HomeStateBuilder) updates) {
+  void update(void Function(HomeStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -132,13 +128,16 @@ class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
     try {
       _$result = _$v ??
           new _$HomeState._(
-              page: page,
-              term: term,
+              page: BuiltValueNullFieldError.checkNotNull(
+                  page, 'HomeState', 'page'),
+              term: BuiltValueNullFieldError.checkNotNull(
+                  term, 'HomeState', 'term'),
               items: items.build(),
-              isLoading: isLoading,
+              isLoading: BuiltValueNullFieldError.checkNotNull(
+                  isLoading, 'HomeState', 'isLoading'),
               error: error);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'items';
         items.build();

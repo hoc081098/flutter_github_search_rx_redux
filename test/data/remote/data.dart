@@ -41,7 +41,7 @@ final colorsRaw = {
 final colors = {
   'Dart': Color(0xFF00B4AB),
   'Kotlin': Color(0xFFF18E33),
-};
+}.build();
 
 final repoItems = BuiltList.of([
   RepoItem(

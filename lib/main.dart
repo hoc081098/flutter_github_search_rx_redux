@@ -24,9 +24,9 @@ void main() {
     colorRemoteSource,
   );
   runApp(
-    Provider<SearchRepository>(
+    Provider<SearchRepository>.value(
+      searchRepo,
       child: MyApp(),
-      value: searchRepo,
     ),
   );
 }
@@ -42,9 +42,37 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.purpleAccent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Provider<SearchUseCase>(
-        child: const MyHomePage(),
-        value: SearchUseCase(Provider.of<SearchRepository>(context)),
+      home: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Github repo search'),
+            ),
+            body: Container(
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Provider<SearchUseCase>.factory(
+                          (context) => SearchUseCase(context.get()),
+                          child: const MyHomePage(),
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                  child: Text('Start'),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

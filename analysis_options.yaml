@@ -1,10 +1,4 @@
-include: package:pedantic/analysis_options.1.9.0.yaml
-
-analyzer:
-  exclude:
-    - "**/*.g.dart"
-    - "lib/src/generated/*.dart"
-    - "lib/generated/*.dart"
+include: package:pedantic/analysis_options.1.11.0.yaml
 linter:
   rules:
     - prefer_final_locals
