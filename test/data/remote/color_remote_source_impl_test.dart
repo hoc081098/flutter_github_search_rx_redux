@@ -1,5 +1,3 @@
-// @dart=2.11
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -10,19 +8,19 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart' show TypeMatcher;
 
+import '../../mocks.mocks.dart';
 import 'data.dart';
-
-class MockClient extends Mock implements http.Client {}
 
 void main() {
   group('ColorRemoteSourceImpl', () {
     final url = Uri.parse('https://github.com/hoc081098');
 
-    ColorRemoteSourceImpl colorSource;
-    MockClient client;
+    late ColorRemoteSourceImpl colorSource;
+    late MockClient client;
 
     setUp(() {
       client = MockClient();
+      when(client.close()).thenAnswer((_) => Future.value(null));
       colorSource = ColorRemoteSourceImpl(client, url);
     });
 
@@ -60,7 +58,7 @@ void main() {
         return http.Response(body, 500);
       });
 
-      Object error;
+      Object? error;
       try {
         await colorSource.getColors();
       } catch (e) {
@@ -78,7 +76,7 @@ void main() {
       when(client.get(url))
           .thenAnswer((_) async => throw SocketException(errorMessage));
 
-      Object error;
+      Object? error;
       try {
         await colorSource.getColors();
       } catch (e) {
