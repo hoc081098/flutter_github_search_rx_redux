@@ -7,18 +7,15 @@ part 'repo_item.g.dart';
 abstract class RepoItem implements Built<RepoItem, RepoItemBuilder> {
   String get fullName;
 
-  @nullable
-  String get language;
+  String? get language;
 
   int get starCount;
 
   String get name;
 
-  @nullable
-  String get description;
+  String? get description;
 
-  @nullable
-  Color get languageColor;
+  Color? get languageColor;
 
   String get htmlUrl;
 

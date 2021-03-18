@@ -10,13 +10,11 @@ class _$SearchAction extends SearchAction {
   @override
   final String term;
 
-  factory _$SearchAction([void Function(SearchActionBuilder) updates]) =>
+  factory _$SearchAction([void Function(SearchActionBuilder)? updates]) =>
       (new SearchActionBuilder()..update(updates)).build();
 
-  _$SearchAction._({this.term}) : super._() {
-    if (term == null) {
-      throw new BuiltValueNullFieldError('SearchAction', 'term');
-    }
+  _$SearchAction._({required this.term}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(term, 'SearchAction', 'term');
   }
 
   @override
@@ -46,17 +44,18 @@ class _$SearchAction extends SearchAction {
 
 class SearchActionBuilder
     implements Builder<SearchAction, SearchActionBuilder> {
-  _$SearchAction _$v;
+  _$SearchAction? _$v;
 
-  String _term;
-  String get term => _$this._term;
-  set term(String term) => _$this._term = term;
+  String? _term;
+  String? get term => _$this._term;
+  set term(String? term) => _$this._term = term;
 
   SearchActionBuilder();
 
   SearchActionBuilder get _$this {
-    if (_$v != null) {
-      _term = _$v.term;
+    final $v = _$v;
+    if ($v != null) {
+      _term = $v.term;
       _$v = null;
     }
     return this;
@@ -64,20 +63,21 @@ class SearchActionBuilder
 
   @override
   void replace(SearchAction other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SearchAction;
   }
 
   @override
-  void update(void Function(SearchActionBuilder) updates) {
+  void update(void Function(SearchActionBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
   _$SearchAction build() {
-    final _$result = _$v ?? new _$SearchAction._(term: term);
+    final _$result = _$v ??
+        new _$SearchAction._(
+            term: BuiltValueNullFieldError.checkNotNull(
+                term, 'SearchAction', 'term'));
     replace(_$result);
     return _$result;
   }
@@ -88,13 +88,11 @@ class _$TextChangedAction extends TextChangedAction {
   final String term;
 
   factory _$TextChangedAction(
-          [void Function(TextChangedActionBuilder) updates]) =>
+          [void Function(TextChangedActionBuilder)? updates]) =>
       (new TextChangedActionBuilder()..update(updates)).build();
 
-  _$TextChangedAction._({this.term}) : super._() {
-    if (term == null) {
-      throw new BuiltValueNullFieldError('TextChangedAction', 'term');
-    }
+  _$TextChangedAction._({required this.term}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(term, 'TextChangedAction', 'term');
   }
 
   @override
@@ -125,17 +123,18 @@ class _$TextChangedAction extends TextChangedAction {
 
 class TextChangedActionBuilder
     implements Builder<TextChangedAction, TextChangedActionBuilder> {
-  _$TextChangedAction _$v;
+  _$TextChangedAction? _$v;
 
-  String _term;
-  String get term => _$this._term;
-  set term(String term) => _$this._term = term;
+  String? _term;
+  String? get term => _$this._term;
+  set term(String? term) => _$this._term = term;
 
   TextChangedActionBuilder();
 
   TextChangedActionBuilder get _$this {
-    if (_$v != null) {
-      _term = _$v.term;
+    final $v = _$v;
+    if ($v != null) {
+      _term = $v.term;
       _$v = null;
     }
     return this;
@@ -143,20 +142,21 @@ class TextChangedActionBuilder
 
   @override
   void replace(TextChangedAction other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TextChangedAction;
   }
 
   @override
-  void update(void Function(TextChangedActionBuilder) updates) {
+  void update(void Function(TextChangedActionBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
   _$TextChangedAction build() {
-    final _$result = _$v ?? new _$TextChangedAction._(term: term);
+    final _$result = _$v ??
+        new _$TextChangedAction._(
+            term: BuiltValueNullFieldError.checkNotNull(
+                term, 'TextChangedAction', 'term'));
     replace(_$result);
     return _$result;
   }
@@ -169,16 +169,14 @@ class _$SearchLoadingAction extends SearchLoadingAction {
   final int nextPage;
 
   factory _$SearchLoadingAction(
-          [void Function(SearchLoadingActionBuilder) updates]) =>
+          [void Function(SearchLoadingActionBuilder)? updates]) =>
       (new SearchLoadingActionBuilder()..update(updates)).build();
 
-  _$SearchLoadingAction._({this.term, this.nextPage}) : super._() {
-    if (term == null) {
-      throw new BuiltValueNullFieldError('SearchLoadingAction', 'term');
-    }
-    if (nextPage == null) {
-      throw new BuiltValueNullFieldError('SearchLoadingAction', 'nextPage');
-    }
+  _$SearchLoadingAction._({required this.term, required this.nextPage})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(term, 'SearchLoadingAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(
+        nextPage, 'SearchLoadingAction', 'nextPage');
   }
 
   @override
@@ -214,22 +212,23 @@ class _$SearchLoadingAction extends SearchLoadingAction {
 
 class SearchLoadingActionBuilder
     implements Builder<SearchLoadingAction, SearchLoadingActionBuilder> {
-  _$SearchLoadingAction _$v;
+  _$SearchLoadingAction? _$v;
 
-  String _term;
-  String get term => _$this._term;
-  set term(String term) => _$this._term = term;
+  String? _term;
+  String? get term => _$this._term;
+  set term(String? term) => _$this._term = term;
 
-  int _nextPage;
-  int get nextPage => _$this._nextPage;
-  set nextPage(int nextPage) => _$this._nextPage = nextPage;
+  int? _nextPage;
+  int? get nextPage => _$this._nextPage;
+  set nextPage(int? nextPage) => _$this._nextPage = nextPage;
 
   SearchLoadingActionBuilder();
 
   SearchLoadingActionBuilder get _$this {
-    if (_$v != null) {
-      _term = _$v.term;
-      _nextPage = _$v.nextPage;
+    final $v = _$v;
+    if ($v != null) {
+      _term = $v.term;
+      _nextPage = $v.nextPage;
       _$v = null;
     }
     return this;
@@ -237,21 +236,23 @@ class SearchLoadingActionBuilder
 
   @override
   void replace(SearchLoadingAction other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SearchLoadingAction;
   }
 
   @override
-  void update(void Function(SearchLoadingActionBuilder) updates) {
+  void update(void Function(SearchLoadingActionBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
   _$SearchLoadingAction build() {
-    final _$result =
-        _$v ?? new _$SearchLoadingAction._(term: term, nextPage: nextPage);
+    final _$result = _$v ??
+        new _$SearchLoadingAction._(
+            term: BuiltValueNullFieldError.checkNotNull(
+                term, 'SearchLoadingAction', 'term'),
+            nextPage: BuiltValueNullFieldError.checkNotNull(
+                nextPage, 'SearchLoadingAction', 'nextPage'));
     replace(_$result);
     return _$result;
   }
@@ -264,16 +265,14 @@ class _$SearchSuccessAction extends SearchSuccessAction {
   final BuiltList<RepoItem> items;
 
   factory _$SearchSuccessAction(
-          [void Function(SearchSuccessActionBuilder) updates]) =>
+          [void Function(SearchSuccessActionBuilder)? updates]) =>
       (new SearchSuccessActionBuilder()..update(updates)).build();
 
-  _$SearchSuccessAction._({this.term, this.items}) : super._() {
-    if (term == null) {
-      throw new BuiltValueNullFieldError('SearchSuccessAction', 'term');
-    }
-    if (items == null) {
-      throw new BuiltValueNullFieldError('SearchSuccessAction', 'items');
-    }
+  _$SearchSuccessAction._({required this.term, required this.items})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(term, 'SearchSuccessAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(
+        items, 'SearchSuccessAction', 'items');
   }
 
   @override
@@ -309,23 +308,24 @@ class _$SearchSuccessAction extends SearchSuccessAction {
 
 class SearchSuccessActionBuilder
     implements Builder<SearchSuccessAction, SearchSuccessActionBuilder> {
-  _$SearchSuccessAction _$v;
+  _$SearchSuccessAction? _$v;
 
-  String _term;
-  String get term => _$this._term;
-  set term(String term) => _$this._term = term;
+  String? _term;
+  String? get term => _$this._term;
+  set term(String? term) => _$this._term = term;
 
-  ListBuilder<RepoItem> _items;
+  ListBuilder<RepoItem>? _items;
   ListBuilder<RepoItem> get items =>
       _$this._items ??= new ListBuilder<RepoItem>();
-  set items(ListBuilder<RepoItem> items) => _$this._items = items;
+  set items(ListBuilder<RepoItem>? items) => _$this._items = items;
 
   SearchSuccessActionBuilder();
 
   SearchSuccessActionBuilder get _$this {
-    if (_$v != null) {
-      _term = _$v.term;
-      _items = _$v.items?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _term = $v.term;
+      _items = $v.items.toBuilder();
       _$v = null;
     }
     return this;
@@ -333,14 +333,12 @@ class SearchSuccessActionBuilder
 
   @override
   void replace(SearchSuccessAction other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SearchSuccessAction;
   }
 
   @override
-  void update(void Function(SearchSuccessActionBuilder) updates) {
+  void update(void Function(SearchSuccessActionBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -348,10 +346,13 @@ class SearchSuccessActionBuilder
   _$SearchSuccessAction build() {
     _$SearchSuccessAction _$result;
     try {
-      _$result =
-          _$v ?? new _$SearchSuccessAction._(term: term, items: items.build());
+      _$result = _$v ??
+          new _$SearchSuccessAction._(
+              term: BuiltValueNullFieldError.checkNotNull(
+                  term, 'SearchSuccessAction', 'term'),
+              items: items.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'items';
         items.build();
@@ -373,13 +374,14 @@ class _$SearchFailureAction extends SearchFailureAction {
   final Object error;
 
   factory _$SearchFailureAction(
-          [void Function(SearchFailureActionBuilder) updates]) =>
+          [void Function(SearchFailureActionBuilder)? updates]) =>
       (new SearchFailureActionBuilder()..update(updates)).build();
 
-  _$SearchFailureAction._({this.term, this.error}) : super._() {
-    if (term == null) {
-      throw new BuiltValueNullFieldError('SearchFailureAction', 'term');
-    }
+  _$SearchFailureAction._({required this.term, required this.error})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(term, 'SearchFailureAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(
+        error, 'SearchFailureAction', 'error');
   }
 
   @override
@@ -415,22 +417,23 @@ class _$SearchFailureAction extends SearchFailureAction {
 
 class SearchFailureActionBuilder
     implements Builder<SearchFailureAction, SearchFailureActionBuilder> {
-  _$SearchFailureAction _$v;
+  _$SearchFailureAction? _$v;
 
-  String _term;
-  String get term => _$this._term;
-  set term(String term) => _$this._term = term;
+  String? _term;
+  String? get term => _$this._term;
+  set term(String? term) => _$this._term = term;
 
-  Object _error;
-  Object get error => _$this._error;
-  set error(Object error) => _$this._error = error;
+  Object? _error;
+  Object? get error => _$this._error;
+  set error(Object? error) => _$this._error = error;
 
   SearchFailureActionBuilder();
 
   SearchFailureActionBuilder get _$this {
-    if (_$v != null) {
-      _term = _$v.term;
-      _error = _$v.error;
+    final $v = _$v;
+    if ($v != null) {
+      _term = $v.term;
+      _error = $v.error;
       _$v = null;
     }
     return this;
@@ -438,21 +441,23 @@ class SearchFailureActionBuilder
 
   @override
   void replace(SearchFailureAction other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SearchFailureAction;
   }
 
   @override
-  void update(void Function(SearchFailureActionBuilder) updates) {
+  void update(void Function(SearchFailureActionBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
   _$SearchFailureAction build() {
-    final _$result =
-        _$v ?? new _$SearchFailureAction._(term: term, error: error);
+    final _$result = _$v ??
+        new _$SearchFailureAction._(
+            term: BuiltValueNullFieldError.checkNotNull(
+                term, 'SearchFailureAction', 'term'),
+            error: BuiltValueNullFieldError.checkNotNull(
+                error, 'SearchFailureAction', 'error'));
     replace(_$result);
     return _$result;
   }

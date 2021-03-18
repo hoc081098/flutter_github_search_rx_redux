@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_pattern/flutter_bloc_pattern.dart';
 import 'package:flutter_disposebag/flutter_disposebag.dart';
 import 'package:flutter_github_search_rx_redux/domain/repo_item.dart';
 import 'package:flutter_github_search_rx_redux/domain/search_usecase.dart';
@@ -11,49 +12,47 @@ import 'package:rx_redux/rx_redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
-  RxReduxStore<HomeAction, HomeState> store;
-  final key = GlobalKey<ScaffoldState>();
+  late final store = createStore(Provider.of<SearchUseCase>(context));
+  Object? subscribedStore;
+
+  @override
+  void initState() {
+    super.initState();
+
+    store
+        .select((state) => state.page)
+        .listen((page) => print('Page: $page'))
+        .disposedBy(bag);
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    store ??= () {
-      final store = createStore(Provider.of<SearchUseCase>(context));
-      subscribe(store);
-      return store;
-    }();
-  }
-
-  void subscribe(RxReduxStore<HomeAction, HomeState> store) {
-    store.stateStream
-        .listen((state) => print('Page: ${state.page}'))
-        .disposedBy(bag);
-
-    store.actionStream.listen((action) {
+    subscribedStore ??= store.actionStream.listen((action) {
       if (action is SearchFailureAction) {
-        key.snackBar('Error occurred');
+        print(action.error);
+        context.snackBar('Error occurred');
       }
     }).disposedBy(bag);
   }
 
   @override
   void dispose() {
-    store.dispose();
     super.dispose();
+    store.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
       appBar: AppBar(
         title: Text('Github repo search'),
       ),
@@ -72,13 +71,10 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
             ),
           ),
           Expanded(
-            child: StreamBuilder<HomeState>(
+            child: RxStreamBuilder<HomeState>(
               stream: store.stateStream,
-              initialData: store.state,
-              builder: (context, snapshot) {
-                final state = snapshot.data;
-
-                if (state.isLoading && state.isFirstPage) {
+              builder: (context, state) {
+                if (state!.isLoading && state.isFirstPage) {
                   return Center(
                     child: SizedBox(
                       width: 56,
@@ -110,10 +106,10 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
                             child: RaisedButton(
                               onPressed: () =>
                                   store.dispatch(const RetryAction()),
-                              child: Text('Retry'),
                               elevation: 12,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24)),
+                              child: Text('Retry'),
                             ),
                           )
                         ],
@@ -146,9 +142,9 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
 
 class RepoItemsListWidget extends StatelessWidget {
   const RepoItemsListWidget({
-    Key key,
-    @required this.state,
-    @required this.dispatch,
+    Key? key,
+    required this.state,
+    required this.dispatch,
   }) : super(key: key);
 
   final HomeState state;
@@ -182,10 +178,10 @@ class RepoItemsListWidget extends StatelessWidget {
                   height: 48,
                   child: RaisedButton(
                     onPressed: () => dispatch(const RetryAction()),
-                    child: Text('Retry'),
                     elevation: 12,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24)),
+                    child: Text('Retry'),
                   ),
                 ),
               ],
@@ -214,10 +210,10 @@ class RepoItemsListWidget extends StatelessWidget {
               height: 48,
               child: RaisedButton(
                 onPressed: () => dispatch(const LoadNextPageAction()),
-                child: Text('Load next page'),
                 elevation: 12,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24)),
+                child: Text('Load next page'),
               ),
             ),
           ),
@@ -230,14 +226,18 @@ class RepoItemsListWidget extends StatelessWidget {
 
 class RepoItemWidget extends StatelessWidget {
   const RepoItemWidget({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
   }) : super(key: key);
 
   final RepoItem item;
 
   @override
   Widget build(BuildContext context) {
+    final languageColor = item.languageColor;
+    final description = item.description;
+    final textTheme = Theme.of(context).textTheme;
+
     return InkWell(
       onTap: () async {
         if (await canLaunch(item.htmlUrl)) {
@@ -263,19 +263,16 @@ class RepoItemWidget extends StatelessWidget {
               children: [
                 Text(
                   item.fullName,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: textTheme.subtitle1,
                   textAlign: TextAlign.start,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 16),
-                if (item.description != null)
+                if (description != null)
                   Text(
-                    item.description,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        .copyWith(fontSize: 12),
+                    description,
+                    style: textTheme.subtitle2!.copyWith(fontSize: 12),
                     textAlign: TextAlign.start,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -284,20 +281,20 @@ class RepoItemWidget extends StatelessWidget {
                 if (item.language != null)
                   Row(
                     children: [
-                      if (item.languageColor != null) ...[
+                      if (languageColor != null) ...[
                         Container(
                           width: 12,
                           height: 12,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            color: item.languageColor,
+                            color: languageColor,
                           ),
                         ),
                         const SizedBox(width: 8),
                       ],
                       Text(
-                        item.language,
-                        style: Theme.of(context).textTheme.subtitle2,
+                        item.language ?? 'Unknown language',
+                        style: textTheme.subtitle2,
                         textAlign: TextAlign.start,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -309,7 +306,7 @@ class RepoItemWidget extends StatelessWidget {
                       ),
                       Text(item.starCount.toString()),
                     ],
-                  )
+                  ),
               ],
             ),
           ),
@@ -319,9 +316,9 @@ class RepoItemWidget extends StatelessWidget {
   }
 }
 
-extension on GlobalKey<ScaffoldState> {
+extension on BuildContext {
   void snackBar(String message) {
-    currentState?.showSnackBar(
+    ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         content: Text(message),
         duration: const Duration(seconds: 2),

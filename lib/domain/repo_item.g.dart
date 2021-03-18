@@ -10,48 +10,38 @@ class _$RepoItem extends RepoItem {
   @override
   final String fullName;
   @override
-  final String language;
+  final String? language;
   @override
   final int starCount;
   @override
   final String name;
   @override
-  final String description;
+  final String? description;
   @override
-  final Color languageColor;
+  final Color? languageColor;
   @override
   final String htmlUrl;
   @override
   final Owner owner;
 
-  factory _$RepoItem([void Function(RepoItemBuilder) updates]) =>
+  factory _$RepoItem([void Function(RepoItemBuilder)? updates]) =>
       (new RepoItemBuilder()..update(updates)).build();
 
   _$RepoItem._(
-      {this.fullName,
+      {required this.fullName,
       this.language,
-      this.starCount,
-      this.name,
+      required this.starCount,
+      required this.name,
       this.description,
       this.languageColor,
-      this.htmlUrl,
-      this.owner})
+      required this.htmlUrl,
+      required this.owner})
       : super._() {
-    if (fullName == null) {
-      throw new BuiltValueNullFieldError('RepoItem', 'fullName');
-    }
-    if (starCount == null) {
-      throw new BuiltValueNullFieldError('RepoItem', 'starCount');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('RepoItem', 'name');
-    }
-    if (htmlUrl == null) {
-      throw new BuiltValueNullFieldError('RepoItem', 'htmlUrl');
-    }
-    if (owner == null) {
-      throw new BuiltValueNullFieldError('RepoItem', 'owner');
-    }
+    BuiltValueNullFieldError.checkNotNull(fullName, 'RepoItem', 'fullName');
+    BuiltValueNullFieldError.checkNotNull(starCount, 'RepoItem', 'starCount');
+    BuiltValueNullFieldError.checkNotNull(name, 'RepoItem', 'name');
+    BuiltValueNullFieldError.checkNotNull(htmlUrl, 'RepoItem', 'htmlUrl');
+    BuiltValueNullFieldError.checkNotNull(owner, 'RepoItem', 'owner');
   }
 
   @override
@@ -107,53 +97,54 @@ class _$RepoItem extends RepoItem {
 }
 
 class RepoItemBuilder implements Builder<RepoItem, RepoItemBuilder> {
-  _$RepoItem _$v;
+  _$RepoItem? _$v;
 
-  String _fullName;
-  String get fullName => _$this._fullName;
-  set fullName(String fullName) => _$this._fullName = fullName;
+  String? _fullName;
+  String? get fullName => _$this._fullName;
+  set fullName(String? fullName) => _$this._fullName = fullName;
 
-  String _language;
-  String get language => _$this._language;
-  set language(String language) => _$this._language = language;
+  String? _language;
+  String? get language => _$this._language;
+  set language(String? language) => _$this._language = language;
 
-  int _starCount;
-  int get starCount => _$this._starCount;
-  set starCount(int starCount) => _$this._starCount = starCount;
+  int? _starCount;
+  int? get starCount => _$this._starCount;
+  set starCount(int? starCount) => _$this._starCount = starCount;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _description;
-  String get description => _$this._description;
-  set description(String description) => _$this._description = description;
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
 
-  Color _languageColor;
-  Color get languageColor => _$this._languageColor;
-  set languageColor(Color languageColor) =>
+  Color? _languageColor;
+  Color? get languageColor => _$this._languageColor;
+  set languageColor(Color? languageColor) =>
       _$this._languageColor = languageColor;
 
-  String _htmlUrl;
-  String get htmlUrl => _$this._htmlUrl;
-  set htmlUrl(String htmlUrl) => _$this._htmlUrl = htmlUrl;
+  String? _htmlUrl;
+  String? get htmlUrl => _$this._htmlUrl;
+  set htmlUrl(String? htmlUrl) => _$this._htmlUrl = htmlUrl;
 
-  OwnerBuilder _owner;
+  OwnerBuilder? _owner;
   OwnerBuilder get owner => _$this._owner ??= new OwnerBuilder();
-  set owner(OwnerBuilder owner) => _$this._owner = owner;
+  set owner(OwnerBuilder? owner) => _$this._owner = owner;
 
   RepoItemBuilder();
 
   RepoItemBuilder get _$this {
-    if (_$v != null) {
-      _fullName = _$v.fullName;
-      _language = _$v.language;
-      _starCount = _$v.starCount;
-      _name = _$v.name;
-      _description = _$v.description;
-      _languageColor = _$v.languageColor;
-      _htmlUrl = _$v.htmlUrl;
-      _owner = _$v.owner?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _fullName = $v.fullName;
+      _language = $v.language;
+      _starCount = $v.starCount;
+      _name = $v.name;
+      _description = $v.description;
+      _languageColor = $v.languageColor;
+      _htmlUrl = $v.htmlUrl;
+      _owner = $v.owner.toBuilder();
       _$v = null;
     }
     return this;
@@ -161,14 +152,12 @@ class RepoItemBuilder implements Builder<RepoItem, RepoItemBuilder> {
 
   @override
   void replace(RepoItem other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$RepoItem;
   }
 
   @override
-  void update(void Function(RepoItemBuilder) updates) {
+  void update(void Function(RepoItemBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -178,16 +167,20 @@ class RepoItemBuilder implements Builder<RepoItem, RepoItemBuilder> {
     try {
       _$result = _$v ??
           new _$RepoItem._(
-              fullName: fullName,
+              fullName: BuiltValueNullFieldError.checkNotNull(
+                  fullName, 'RepoItem', 'fullName'),
               language: language,
-              starCount: starCount,
-              name: name,
+              starCount: BuiltValueNullFieldError.checkNotNull(
+                  starCount, 'RepoItem', 'starCount'),
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, 'RepoItem', 'name'),
               description: description,
               languageColor: languageColor,
-              htmlUrl: htmlUrl,
+              htmlUrl: BuiltValueNullFieldError.checkNotNull(
+                  htmlUrl, 'RepoItem', 'htmlUrl'),
               owner: owner.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'owner';
         owner.build();
@@ -208,16 +201,12 @@ class _$Owner extends Owner {
   @override
   final String avatar;
 
-  factory _$Owner([void Function(OwnerBuilder) updates]) =>
+  factory _$Owner([void Function(OwnerBuilder)? updates]) =>
       (new OwnerBuilder()..update(updates)).build();
 
-  _$Owner._({this.username, this.avatar}) : super._() {
-    if (username == null) {
-      throw new BuiltValueNullFieldError('Owner', 'username');
-    }
-    if (avatar == null) {
-      throw new BuiltValueNullFieldError('Owner', 'avatar');
-    }
+  _$Owner._({required this.username, required this.avatar}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(username, 'Owner', 'username');
+    BuiltValueNullFieldError.checkNotNull(avatar, 'Owner', 'avatar');
   }
 
   @override
@@ -250,22 +239,23 @@ class _$Owner extends Owner {
 }
 
 class OwnerBuilder implements Builder<Owner, OwnerBuilder> {
-  _$Owner _$v;
+  _$Owner? _$v;
 
-  String _username;
-  String get username => _$this._username;
-  set username(String username) => _$this._username = username;
+  String? _username;
+  String? get username => _$this._username;
+  set username(String? username) => _$this._username = username;
 
-  String _avatar;
-  String get avatar => _$this._avatar;
-  set avatar(String avatar) => _$this._avatar = avatar;
+  String? _avatar;
+  String? get avatar => _$this._avatar;
+  set avatar(String? avatar) => _$this._avatar = avatar;
 
   OwnerBuilder();
 
   OwnerBuilder get _$this {
-    if (_$v != null) {
-      _username = _$v.username;
-      _avatar = _$v.avatar;
+    final $v = _$v;
+    if ($v != null) {
+      _username = $v.username;
+      _avatar = $v.avatar;
       _$v = null;
     }
     return this;
@@ -273,20 +263,23 @@ class OwnerBuilder implements Builder<Owner, OwnerBuilder> {
 
   @override
   void replace(Owner other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Owner;
   }
 
   @override
-  void update(void Function(OwnerBuilder) updates) {
+  void update(void Function(OwnerBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
   _$Owner build() {
-    final _$result = _$v ?? new _$Owner._(username: username, avatar: avatar);
+    final _$result = _$v ??
+        new _$Owner._(
+            username: BuiltValueNullFieldError.checkNotNull(
+                username, 'Owner', 'username'),
+            avatar: BuiltValueNullFieldError.checkNotNull(
+                avatar, 'Owner', 'avatar'));
     replace(_$result);
     return _$result;
   }

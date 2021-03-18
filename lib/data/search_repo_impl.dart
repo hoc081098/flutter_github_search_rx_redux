@@ -11,7 +11,7 @@ import 'remote/search_remote_source.dart';
 class SearchRepositoryImpl implements SearchRepository {
   final SearchRemoteSource _searchRemoteSource;
   final ColorRemoteSource _colorRemoteSource;
-  final BuiltList<RepoItem> Function(SearchResult, Map<String, Color> colors)
+  final BuiltList<RepoItem> Function(SearchResult, BuiltMap<String, Color> colors)
       _searchResultToRepoItems;
 
   SearchRepositoryImpl(
@@ -21,21 +21,17 @@ class SearchRepositoryImpl implements SearchRepository {
   );
 
   @override
-  Future<BuiltList<RepoItem>> searchBy({String term, int page}) {
-    if (term == null) {
-      return Future.error(ArgumentError.notNull('term'));
-    }
-    if (page == null) {
-      return Future.error(ArgumentError.notNull('page'));
-    }
-
+  Future<BuiltList<RepoItem>> searchBy({
+    required String term,
+    required int page,
+  }) {
     return Future.wait([
       _searchRemoteSource.search(term, page),
       _colorRemoteSource.getColors(),
     ]).then(
       (values) => _searchResultToRepoItems(
         values[0] as SearchResult,
-        values[1] as Map<String, Color>,
+        values[1] as BuiltMap<String, Color>,
       ),
     );
   }

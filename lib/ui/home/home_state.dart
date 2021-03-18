@@ -13,8 +13,7 @@ abstract class HomeState implements Built<HomeState, HomeStateBuilder> {
 
   bool get isLoading;
 
-  @nullable
-  Object get error;
+  Object? get error;
 
   HomeState._();
 

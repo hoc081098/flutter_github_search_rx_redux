@@ -7,18 +7,19 @@ import 'search_result.dart';
 
 BuiltList<RepoItem> searchResultToRepoItems(
   SearchResult result,
-  Map<String, Color> colors,
+  BuiltMap<String, Color> colors,
 ) =>
     result.items
-        .map(
+        ?.map(
           (item) => _itemToRepoItem(
             item,
             item.language == null ? null : colors[item.language],
           ),
         )
-        .toBuiltList();
+        .toBuiltList() ??
+    <RepoItem>[].build();
 
-RepoItem _itemToRepoItem(SearchResultItem item, Color color) => RepoItem(
+RepoItem _itemToRepoItem(SearchResultItem item, Color? color) => RepoItem(
       (b) => b
         ..fullName = item.fullName
         ..language = item.language

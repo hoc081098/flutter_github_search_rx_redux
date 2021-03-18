@@ -12,8 +12,8 @@ class SearchUseCase {
   SearchUseCase(this._repository);
 
   Future<BuiltList<RepoItem>> call({
-    @required String term,
-    @required int page,
+    required String term,
+    required int page,
   }) =>
       _repository.searchBy(term: term, page: page);
 }

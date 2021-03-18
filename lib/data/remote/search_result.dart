@@ -1,18 +1,17 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:meta/meta.dart';
 
 class SearchResult {
   SearchResult({
-    @required this.totalCount,
-    @required this.incompleteResults,
-    @required this.items,
+    required this.totalCount,
+    required this.incompleteResults,
+    required this.items,
   });
 
   final int totalCount;
   final bool incompleteResults;
-  final List<SearchResultItem> items;
+  final List<SearchResultItem>? items;
 
   factory SearchResult.fromRawJson(String str) =>
       SearchResult.fromJson(json.decode(str));
@@ -29,7 +28,7 @@ class SearchResult {
   Map<String, dynamic> toJson() => {
         'total_count': totalCount,
         'incomplete_results': incompleteResults,
-        'items': items.map((e) => e.toJson()).toList(),
+        'items': items?.map((e) => e.toJson()).toList(),
       };
 
   @override
@@ -52,19 +51,19 @@ class SearchResultItem {
   final String fullName;
   final SearchResultItemOwner owner;
   final int stargazersCount;
-  final String language;
+  final String? language;
   final String name;
-  final String description;
+  final String? description;
   final String htmlUrl;
 
   SearchResultItem({
-    this.fullName,
-    this.owner,
-    this.stargazersCount,
-    this.language,
-    this.name,
-    this.description,
-    this.htmlUrl,
+    required this.fullName,
+    required this.owner,
+    required this.stargazersCount,
+    required this.language,
+    required this.name,
+    required this.description,
+    required this.htmlUrl,
   });
 
   factory SearchResultItem.fromJson(Map<String, dynamic> json) =>
@@ -114,8 +113,8 @@ class SearchResultItem {
 
 class SearchResultItemOwner {
   SearchResultItemOwner({
-    this.login,
-    this.avatarUrl,
+    required this.login,
+    required this.avatarUrl,
   });
 
   final String login;

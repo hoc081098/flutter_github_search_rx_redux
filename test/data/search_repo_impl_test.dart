@@ -13,9 +13,9 @@ class MockColorRemoteSource extends Mock implements ColorRemoteSource {}
 
 void main() {
   group('SearchRepositoryImpl', () {
-    SearchRepositoryImpl repo;
-    MockSearchRemoteSource searchSource;
-    MockColorRemoteSource colorSource;
+    late SearchRepositoryImpl repo;
+    late MockSearchRemoteSource searchSource;
+    late MockColorRemoteSource colorSource;
 
     setUpAll(() {
       searchSource = MockSearchRemoteSource();
@@ -38,39 +38,13 @@ void main() {
       expect(items, repoItems);
     });
 
-    test('search failed when argument is null', () async {
-      {
-        Object error;
-        try {
-          await repo.searchBy(term: null, page: 1);
-        } catch (e) {
-          error = e;
-        }
-
-        expect(error, isNotNull);
-        expect(error, isArgumentError);
-      }
-
-      {
-        Object error;
-        try {
-          await repo.searchBy(term: 'term', page: null);
-        } catch (e) {
-          error = e;
-        }
-
-        expect(error, isNotNull);
-        expect(error, isArgumentError);
-      }
-    });
-
     test('search failed', () async {
       {
         when(searchSource.search('term', 1))
             .thenAnswer((_) => Future.error(Exception()));
         when(colorSource.getColors()).thenAnswer((_) => Future.value(colors));
 
-        Object error;
+        Object? error;
         try {
           await repo.searchBy(term: 'term', page: 1);
         } catch (e) {
@@ -88,7 +62,7 @@ void main() {
         when(colorSource.getColors())
             .thenAnswer((_) => Future.error(Exception()));
 
-        Object error;
+        Object? error;
         try {
           await repo.searchBy(term: 'term', page: 1);
         } catch (e) {
