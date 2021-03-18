@@ -66,12 +66,14 @@ class HomeSideEffects {
   ) {
     final textChangedAction$ = actions.whereType<TextChangedAction>();
 
-    return actions
-        .whereType<RetryAction>()
-        .map((_) => getState())
-        .where((state) => state.canRetry)
-        .exhaustMap((state) => _nextPage(state.term, state.page + 1)
-            .takeUntil(textChangedAction$));
+    final performRetry = (RetryAction action) {
+      return Stream.value(getState())
+          .where((state) => state.canRetry)
+          .exhaustMap((state) => _nextPage(state.term, state.page + 1)
+              .takeUntil(textChangedAction$));
+    };
+
+    return actions.whereType<RetryAction>().exhaustMap(performRetry);
   }
 
   Stream<HomeAction> _nextPage(String term, int nextPage) {
