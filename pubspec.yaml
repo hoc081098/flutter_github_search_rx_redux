@@ -11,6 +11,7 @@ dependencies:
   flutter_disposebag: ^1.1.0-nullsafety.1
   rx_redux: ^2.2.0-nullsafety.2
   flutter_provider: ^2.0.0
+  rxdart_ext: ^0.0.1
 
   built_collection: ^5.0.0
   rxdart: ^0.26.0

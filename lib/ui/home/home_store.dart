@@ -1,6 +1,7 @@
 import 'package:flutter_github_search_rx_redux/domain/search_usecase.dart';
 import 'package:rx_redux/rx_redux.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:rxdart_ext/rxdart_ext.dart';
 
 import 'home_action.dart';
 import 'home_state.dart';
@@ -50,27 +51,33 @@ class HomeSideEffects {
     Stream<HomeAction> actions,
     GetState<HomeState> getState,
   ) {
-    final textChangedAction$ = actions.whereType<TextChangedAction>();
+    final textChangedAction$ = actions.whereType<TextChangedAction>().debug();
+
+    final performLoadingNextPage = (LoadNextPageAction action) {
+      return Stream.value(getState())
+          .where((state) => state.canLoadNextPage)
+          .exhaustMap((state) => _nextPage(state.term, state.page + 1)
+              .takeUntil(textChangedAction$)
+              .debug());
+    };
 
     return actions
         .whereType<LoadNextPageAction>()
-        .map((_) => getState())
-        .where((state) => state.canLoadNextPage)
-        .exhaustMap((state) => _nextPage(state.term, state.page + 1)
-            .takeUntil(textChangedAction$));
+        .exhaustMap(performLoadingNextPage);
   }
 
   Stream<HomeAction> retry(
     Stream<HomeAction> actions,
     GetState<HomeState> getState,
   ) {
-    final textChangedAction$ = actions.whereType<TextChangedAction>();
+    final textChangedAction$ = actions.whereType<TextChangedAction>().debug();
 
     final performRetry = (RetryAction action) {
       return Stream.value(getState())
           .where((state) => state.canRetry)
           .exhaustMap((state) => _nextPage(state.term, state.page + 1)
-              .takeUntil(textChangedAction$));
+              .takeUntil(textChangedAction$)
+              .debug());
     };
 
     return actions.whereType<RetryAction>().exhaustMap(performRetry);
