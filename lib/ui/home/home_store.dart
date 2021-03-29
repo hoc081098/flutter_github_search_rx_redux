@@ -11,7 +11,7 @@ RxReduxStore<HomeAction, HomeState> createStore(SearchUseCase searchUseCase) =>
       initialState: HomeState.initial(),
       sideEffects: HomeSideEffects(searchUseCase)(),
       reducer: (state, action) => action.reduce(state),
-      // logger: rxReduxDefaultLogger,
+      logger: rxReduxDefaultLogger,
     );
 
 class HomeSideEffects {
@@ -88,7 +88,7 @@ class HomeSideEffects {
       ..term = term
       ..nextPage = nextPage);
 
-    return Rx.defer(() => _searchUseCase(term: term, page: nextPage).asStream())
+    return Rx.fromCallable(() => _searchUseCase(term: term, page: nextPage))
         .map<HomeAction>(
           (items) => SearchSuccessAction((b) => b
             ..term = term
