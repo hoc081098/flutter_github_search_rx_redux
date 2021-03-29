@@ -1,6 +1,7 @@
 import 'package:flutter_github_search_rx_redux/domain/search_usecase.dart';
 import 'package:rx_redux/rx_redux.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:rxdart_ext/rxdart_ext.dart';
 
 import 'home_action.dart';
 import 'home_state.dart';
@@ -10,7 +11,7 @@ RxReduxStore<HomeAction, HomeState> createStore(SearchUseCase searchUseCase) =>
       initialState: HomeState.initial(),
       sideEffects: HomeSideEffects(searchUseCase)(),
       reducer: (state, action) => action.reduce(state),
-      // logger: rxReduxDefaultLogger,
+      logger: rxReduxDefaultLogger,
     );
 
 class HomeSideEffects {
@@ -50,28 +51,36 @@ class HomeSideEffects {
     Stream<HomeAction> actions,
     GetState<HomeState> getState,
   ) {
-    final textChangedAction$ = actions.whereType<TextChangedAction>();
+    final textChangedAction$ = actions.whereType<TextChangedAction>().debug();
+
+    final performLoadingNextPage = (LoadNextPageAction action) {
+      return Stream.value(getState())
+          .where((state) => state.canLoadNextPage)
+          .exhaustMap((state) => _nextPage(state.term, state.page + 1)
+              .takeUntil(textChangedAction$)
+              .debug());
+    };
 
     return actions
         .whereType<LoadNextPageAction>()
-        .map((_) => getState())
-        .where((state) => state.canLoadNextPage)
-        .exhaustMap((state) => _nextPage(state.term, state.page + 1)
-            .takeUntil(textChangedAction$));
+        .exhaustMap(performLoadingNextPage);
   }
 
   Stream<HomeAction> retry(
     Stream<HomeAction> actions,
     GetState<HomeState> getState,
   ) {
-    final textChangedAction$ = actions.whereType<TextChangedAction>();
+    final textChangedAction$ = actions.whereType<TextChangedAction>().debug();
 
-    return actions
-        .whereType<RetryAction>()
-        .map((_) => getState())
-        .where((state) => state.canRetry)
-        .exhaustMap((state) => _nextPage(state.term, state.page + 1)
-            .takeUntil(textChangedAction$));
+    final performRetry = (RetryAction action) {
+      return Stream.value(getState())
+          .where((state) => state.canRetry)
+          .exhaustMap((state) => _nextPage(state.term, state.page + 1)
+              .takeUntil(textChangedAction$)
+              .debug());
+    };
+
+    return actions.whereType<RetryAction>().exhaustMap(performRetry);
   }
 
   Stream<HomeAction> _nextPage(String term, int nextPage) {
@@ -79,7 +88,7 @@ class HomeSideEffects {
       ..term = term
       ..nextPage = nextPage);
 
-    return Rx.defer(() => _searchUseCase(term: term, page: nextPage).asStream())
+    return Rx.fromCallable(() => _searchUseCase(term: term, page: nextPage))
         .map<HomeAction>(
           (items) => SearchSuccessAction((b) => b
             ..term = term

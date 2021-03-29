@@ -56,9 +56,11 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
         title: Text('Github repo search'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 8),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextField(
               decoration: const InputDecoration(
                 suffixIcon: Icon(Icons.search),
@@ -69,6 +71,23 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
                   store.dispatch(SearchAction((b) => b..term = v)),
             ),
           ),
+          const SizedBox(height: 8),
+          RxStreamBuilder<String>(
+            stream: store.select((state) => state.term),
+            builder: (context, term) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                  right: 8,
+                  left: 9,
+                ),
+                child: Text(
+                  "Search results for '$term'",
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 8),
           Expanded(
             child: RxStreamBuilder<HomeState>(
               stream: store.stateStream,
@@ -94,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "Search for '${state.term}' error: ${state.error}'",
+                            'Error: ${state.error}',
                             style: Theme.of(context).textTheme.subtitle1,
                             textAlign: TextAlign.center,
                           ),
@@ -123,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
                   if (state.term.trim().isNotEmpty) {
                     return Center(
                       child: Text(
-                        "Search for '${state.term}' empty results",
+                        'Empty results',
                         style: Theme.of(context).textTheme.subtitle1,
                         textAlign: TextAlign.center,
                       ),
@@ -131,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
                   } else {
                     return Center(
                       child: Text(
-                        'Search git repositories',
+                        'Search github repositories...',
                         style: Theme.of(context).textTheme.subtitle1,
                         textAlign: TextAlign.center,
                       ),

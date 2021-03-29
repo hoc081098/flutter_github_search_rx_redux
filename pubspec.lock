@@ -91,14 +91,14 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.3"
+    version: "8.0.4"
   built_value_generator:
     dependency: "direct dev"
     description:
       name: built_value_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.3"
+    version: "8.0.4"
   characters:
     dependency: transitive
     description:
@@ -189,7 +189,7 @@ packages:
       name: disposebag
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.0-nullsafety.1"
+    version: "1.5.0"
   distinct_value_connectable_stream:
     dependency: transitive
     description:
@@ -236,7 +236,7 @@ packages:
       name: flutter_disposebag
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0-nullsafety.1"
+    version: "1.1.0"
   flutter_provider:
     dependency: "direct main"
     description:
@@ -274,7 +274,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.0"
+    version: "0.13.1"
   http_multi_server:
     dependency: transitive
     description:
@@ -313,12 +313,10 @@ packages:
   loading_indicator:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "8cd0d0781120d4eea91c31c9b32ba60d2d97597a"
-      url: "https://github.com/Mayb3Nots/loading_indicator.git"
-    source: git
-    version: "2.0.0"
+      name: loading_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   logging:
     dependency: transitive
     description:
@@ -353,7 +351,7 @@ packages:
       name: mockito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.2"
+    version: "5.0.3"
   node_preamble:
     dependency: transitive
     description:
@@ -432,7 +430,7 @@ packages:
     source: hosted
     version: "0.26.0"
   rxdart_ext:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart_ext
       url: "https://pub.dartlang.org"
