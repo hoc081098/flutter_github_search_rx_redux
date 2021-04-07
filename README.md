@@ -7,6 +7,13 @@
     <img src="https://github.com/hoc081098/rx_redux/blob/v2/images/logo.png?raw=true" alt="Logo" width="300"/>
 </p>
 
+## Demo
+
+<p align="center">
+    <img src="demo1.gif" width="480" > 
+</p>
+
+
 ## Effects with RxDart
 
 ```dart
