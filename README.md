@@ -10,7 +10,7 @@
 ## Demo
 
 <p align="center">
-    <img src="demo1.gif" width="480" > 
+    <img src="https://github.com/hoc081098/hoc081098.github.io/blob/master/flutter_github_search_rx_redux/demo.gif?raw=true" height="480" > 
 </p>
 
 
