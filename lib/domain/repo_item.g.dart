@@ -25,7 +25,7 @@ class _$RepoItem extends RepoItem {
   final Owner owner;
 
   factory _$RepoItem([void Function(RepoItemBuilder)? updates]) =>
-      (new RepoItemBuilder()..update(updates)).build();
+      (new RepoItemBuilder()..update(updates))._build();
 
   _$RepoItem._(
       {required this.fullName,
@@ -37,11 +37,11 @@ class _$RepoItem extends RepoItem {
       required this.htmlUrl,
       required this.owner})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(fullName, 'RepoItem', 'fullName');
-    BuiltValueNullFieldError.checkNotNull(starCount, 'RepoItem', 'starCount');
-    BuiltValueNullFieldError.checkNotNull(name, 'RepoItem', 'name');
-    BuiltValueNullFieldError.checkNotNull(htmlUrl, 'RepoItem', 'htmlUrl');
-    BuiltValueNullFieldError.checkNotNull(owner, 'RepoItem', 'owner');
+    BuiltValueNullFieldError.checkNotNull(fullName, r'RepoItem', 'fullName');
+    BuiltValueNullFieldError.checkNotNull(starCount, r'RepoItem', 'starCount');
+    BuiltValueNullFieldError.checkNotNull(name, r'RepoItem', 'name');
+    BuiltValueNullFieldError.checkNotNull(htmlUrl, r'RepoItem', 'htmlUrl');
+    BuiltValueNullFieldError.checkNotNull(owner, r'RepoItem', 'owner');
   }
 
   @override
@@ -83,7 +83,7 @@ class _$RepoItem extends RepoItem {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('RepoItem')
+    return (newBuiltValueToStringHelper(r'RepoItem')
           ..add('fullName', fullName)
           ..add('language', language)
           ..add('starCount', starCount)
@@ -162,22 +162,24 @@ class RepoItemBuilder implements Builder<RepoItem, RepoItemBuilder> {
   }
 
   @override
-  _$RepoItem build() {
+  RepoItem build() => _build();
+
+  _$RepoItem _build() {
     _$RepoItem _$result;
     try {
       _$result = _$v ??
           new _$RepoItem._(
               fullName: BuiltValueNullFieldError.checkNotNull(
-                  fullName, 'RepoItem', 'fullName'),
+                  fullName, r'RepoItem', 'fullName'),
               language: language,
               starCount: BuiltValueNullFieldError.checkNotNull(
-                  starCount, 'RepoItem', 'starCount'),
+                  starCount, r'RepoItem', 'starCount'),
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, 'RepoItem', 'name'),
+                  name, r'RepoItem', 'name'),
               description: description,
               languageColor: languageColor,
               htmlUrl: BuiltValueNullFieldError.checkNotNull(
-                  htmlUrl, 'RepoItem', 'htmlUrl'),
+                  htmlUrl, r'RepoItem', 'htmlUrl'),
               owner: owner.build());
     } catch (_) {
       late String _$failedField;
@@ -186,7 +188,7 @@ class RepoItemBuilder implements Builder<RepoItem, RepoItemBuilder> {
         owner.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'RepoItem', _$failedField, e.toString());
+            r'RepoItem', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -202,11 +204,11 @@ class _$Owner extends Owner {
   final String avatar;
 
   factory _$Owner([void Function(OwnerBuilder)? updates]) =>
-      (new OwnerBuilder()..update(updates)).build();
+      (new OwnerBuilder()..update(updates))._build();
 
   _$Owner._({required this.username, required this.avatar}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(username, 'Owner', 'username');
-    BuiltValueNullFieldError.checkNotNull(avatar, 'Owner', 'avatar');
+    BuiltValueNullFieldError.checkNotNull(username, r'Owner', 'username');
+    BuiltValueNullFieldError.checkNotNull(avatar, r'Owner', 'avatar');
   }
 
   @override
@@ -231,7 +233,7 @@ class _$Owner extends Owner {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Owner')
+    return (newBuiltValueToStringHelper(r'Owner')
           ..add('username', username)
           ..add('avatar', avatar))
         .toString();
@@ -273,16 +275,18 @@ class OwnerBuilder implements Builder<Owner, OwnerBuilder> {
   }
 
   @override
-  _$Owner build() {
+  Owner build() => _build();
+
+  _$Owner _build() {
     final _$result = _$v ??
         new _$Owner._(
             username: BuiltValueNullFieldError.checkNotNull(
-                username, 'Owner', 'username'),
+                username, r'Owner', 'username'),
             avatar: BuiltValueNullFieldError.checkNotNull(
-                avatar, 'Owner', 'avatar'));
+                avatar, r'Owner', 'avatar'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

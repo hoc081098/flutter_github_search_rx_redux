@@ -6,7 +6,6 @@ import 'package:flutter_github_search_rx_redux/data/remote/color_remote_source_i
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-import 'package:test/test.dart' show TypeMatcher;
 
 import '../../mocks.mocks.dart';
 import 'data.dart';

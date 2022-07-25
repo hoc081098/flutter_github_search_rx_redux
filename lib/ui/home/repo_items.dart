@@ -23,7 +23,10 @@ class RepoItemsListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         if (index < items.length) {
           final item = items[index];
-          return RepoItemWidget(item: item);
+          return RepoItemWidget(
+            item: item,
+            key: ValueKey(item.htmlUrl),
+          );
         }
 
         if (state.error != null) {
@@ -61,11 +64,17 @@ class RepoItemsListWidget extends StatelessWidget {
               width: 56,
               height: 56,
               child: LoadingIndicator(
-                color: Theme.of(context).accentColor,
+                colors: [
+                  Theme.of(context).colorScheme.secondary,
+                ],
                 indicatorType: Indicator.ballScaleMultiple,
               ),
             ),
           );
+        }
+
+        if (state.hasReachedMax) {
+          return const SizedBox.shrink();
         }
 
         return Padding(

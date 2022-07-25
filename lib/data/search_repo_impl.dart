@@ -11,8 +11,8 @@ import 'remote/search_remote_source.dart';
 class SearchRepositoryImpl implements SearchRepository {
   final SearchRemoteSource _searchRemoteSource;
   final ColorRemoteSource _colorRemoteSource;
-  final BuiltList<RepoItem> Function(SearchResult, BuiltMap<String, Color> colors)
-      _searchResultToRepoItems;
+  final BuiltList<RepoItem> Function(
+      SearchResult, BuiltMap<String, Color> colors) _searchResultToRepoItems;
 
   SearchRepositoryImpl(
     this._searchRemoteSource,

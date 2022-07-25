@@ -32,16 +32,24 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  static final themeData = () {
+    final themeData = ThemeData(
+      brightness: Brightness.dark,
+      primarySwatch: Colors.pink,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    );
+    return themeData.copyWith(
+      colorScheme: themeData.colorScheme.copyWith(
+        secondary: Colors.purpleAccent,
+      ),
+    );
+  }();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Github repo search',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.pink,
-        accentColor: Colors.purpleAccent,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: themeData,
       home: Builder(
         builder: (context) {
           return Scaffold(

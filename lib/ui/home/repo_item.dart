@@ -18,8 +18,9 @@ class RepoItemWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
-        if (await canLaunch(item.htmlUrl)) {
-          await launch(item.htmlUrl);
+        final uri = Uri.parse(item.htmlUrl);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri);
         }
       },
       child: Row(
@@ -88,6 +89,7 @@ class RepoItemWidget extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(width: 8),
         ],
       ),
     );
