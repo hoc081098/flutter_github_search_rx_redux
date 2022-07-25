@@ -17,6 +17,13 @@
 ## Effects with RxDart
 
 ```dart
+import 'package:flutter_github_search_rx_redux/domain/search_usecase.dart';
+import 'package:rx_redux/rx_redux.dart';
+import 'package:rxdart_ext/rxdart_ext.dart';
+
+import 'home_action.dart';
+import 'home_state.dart';
+
 RxReduxStore<HomeAction, HomeState> createStore(SearchUseCase searchUseCase) =>
     RxReduxStore(
       initialState: HomeState.initial(),
@@ -107,8 +114,8 @@ class HomeSideEffects {
         )
         .startWith(loadingAction)
         .onErrorReturnWith(
-          (error) => SearchFailureAction((b) => b
-            ..error = error
+          (e, s) => SearchFailureAction((b) => b
+            ..error = e
             ..term = term),
         );
   }
