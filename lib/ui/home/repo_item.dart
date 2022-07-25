@@ -89,6 +89,7 @@ class RepoItemWidget extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(width: 8),
         ],
       ),
     );
