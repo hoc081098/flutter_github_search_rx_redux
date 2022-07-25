@@ -11,10 +11,15 @@
 
 ## Demo
 
+### Android
 <p align="center">
     <img src="https://github.com/hoc081098/hoc081098.github.io/blob/master/flutter_github_search_rx_redux/demo.gif?raw=true" height="480" > 
 </p>
 
+### MacOS desktop
+<p align="center">
+    <img src="https://raw.githubusercontent.com/hoc081098/flutter_github_search_rx_redux/master/github_search_rxredux.png" height="480">
+</p>
 
 ## Effects with RxDart
 
