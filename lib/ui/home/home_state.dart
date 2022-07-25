@@ -15,6 +15,8 @@ abstract class HomeState implements Built<HomeState, HomeStateBuilder> {
 
   Object? get error;
 
+  bool get hasReachedMax;
+
   HomeState._();
 
   factory HomeState([void Function(HomeStateBuilder) updates]) = _$HomeState;
@@ -23,7 +25,8 @@ abstract class HomeState implements Built<HomeState, HomeStateBuilder> {
         (b) => b
           ..page = 0
           ..term = ''
-          ..isLoading = false,
+          ..isLoading = false
+          ..hasReachedMax = false,
       );
 
   bool get isFirstPage => page == 0;
@@ -33,7 +36,8 @@ abstract class HomeState implements Built<HomeState, HomeStateBuilder> {
       error == null &&
       items.isNotEmpty &&
       term.isNotEmpty &&
-      page > 0;
+      page > 0 &&
+      !hasReachedMax;
 
   bool get canRetry => !isLoading && error != null;
 }

@@ -17,21 +17,26 @@ class _$HomeState extends HomeState {
   final bool isLoading;
   @override
   final Object? error;
+  @override
+  final bool hasReachedMax;
 
   factory _$HomeState([void Function(HomeStateBuilder)? updates]) =>
-      (new HomeStateBuilder()..update(updates)).build();
+      (new HomeStateBuilder()..update(updates))._build();
 
   _$HomeState._(
       {required this.page,
       required this.term,
       required this.items,
       required this.isLoading,
-      this.error})
+      this.error,
+      required this.hasReachedMax})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(page, 'HomeState', 'page');
-    BuiltValueNullFieldError.checkNotNull(term, 'HomeState', 'term');
-    BuiltValueNullFieldError.checkNotNull(items, 'HomeState', 'items');
-    BuiltValueNullFieldError.checkNotNull(isLoading, 'HomeState', 'isLoading');
+    BuiltValueNullFieldError.checkNotNull(page, r'HomeState', 'page');
+    BuiltValueNullFieldError.checkNotNull(term, r'HomeState', 'term');
+    BuiltValueNullFieldError.checkNotNull(items, r'HomeState', 'items');
+    BuiltValueNullFieldError.checkNotNull(isLoading, r'HomeState', 'isLoading');
+    BuiltValueNullFieldError.checkNotNull(
+        hasReachedMax, r'HomeState', 'hasReachedMax');
   }
 
   @override
@@ -49,25 +54,29 @@ class _$HomeState extends HomeState {
         term == other.term &&
         items == other.items &&
         isLoading == other.isLoading &&
-        error == other.error;
+        error == other.error &&
+        hasReachedMax == other.hasReachedMax;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, page.hashCode), term.hashCode), items.hashCode),
-            isLoading.hashCode),
-        error.hashCode));
+        $jc(
+            $jc($jc($jc($jc(0, page.hashCode), term.hashCode), items.hashCode),
+                isLoading.hashCode),
+            error.hashCode),
+        hasReachedMax.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('HomeState')
+    return (newBuiltValueToStringHelper(r'HomeState')
           ..add('page', page)
           ..add('term', term)
           ..add('items', items)
           ..add('isLoading', isLoading)
-          ..add('error', error))
+          ..add('error', error)
+          ..add('hasReachedMax', hasReachedMax))
         .toString();
   }
 }
@@ -96,6 +105,11 @@ class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
   Object? get error => _$this._error;
   set error(Object? error) => _$this._error = error;
 
+  bool? _hasReachedMax;
+  bool? get hasReachedMax => _$this._hasReachedMax;
+  set hasReachedMax(bool? hasReachedMax) =>
+      _$this._hasReachedMax = hasReachedMax;
+
   HomeStateBuilder();
 
   HomeStateBuilder get _$this {
@@ -106,6 +120,7 @@ class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
       _items = $v.items.toBuilder();
       _isLoading = $v.isLoading;
       _error = $v.error;
+      _hasReachedMax = $v.hasReachedMax;
       _$v = null;
     }
     return this;
@@ -123,19 +138,23 @@ class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
   }
 
   @override
-  _$HomeState build() {
+  HomeState build() => _build();
+
+  _$HomeState _build() {
     _$HomeState _$result;
     try {
       _$result = _$v ??
           new _$HomeState._(
               page: BuiltValueNullFieldError.checkNotNull(
-                  page, 'HomeState', 'page'),
+                  page, r'HomeState', 'page'),
               term: BuiltValueNullFieldError.checkNotNull(
-                  term, 'HomeState', 'term'),
+                  term, r'HomeState', 'term'),
               items: items.build(),
               isLoading: BuiltValueNullFieldError.checkNotNull(
-                  isLoading, 'HomeState', 'isLoading'),
-              error: error);
+                  isLoading, r'HomeState', 'isLoading'),
+              error: error,
+              hasReachedMax: BuiltValueNullFieldError.checkNotNull(
+                  hasReachedMax, r'HomeState', 'hasReachedMax'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -143,7 +162,7 @@ class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
         items.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'HomeState', _$failedField, e.toString());
+            r'HomeState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -152,4 +171,4 @@ class HomeStateBuilder implements Builder<HomeState, HomeStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

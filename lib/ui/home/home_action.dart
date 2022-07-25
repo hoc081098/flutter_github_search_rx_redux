@@ -121,7 +121,8 @@ abstract class SearchSuccessAction
             }
           }))
         ..error = null
-        ..isLoading = false,
+        ..isLoading = false
+        ..hasReachedMax = items.isEmpty,
     );
   }
 }

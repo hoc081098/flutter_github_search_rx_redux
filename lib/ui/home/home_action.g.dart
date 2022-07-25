@@ -11,10 +11,10 @@ class _$SearchAction extends SearchAction {
   final String term;
 
   factory _$SearchAction([void Function(SearchActionBuilder)? updates]) =>
-      (new SearchActionBuilder()..update(updates)).build();
+      (new SearchActionBuilder()..update(updates))._build();
 
   _$SearchAction._({required this.term}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(term, 'SearchAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(term, r'SearchAction', 'term');
   }
 
   @override
@@ -37,7 +37,7 @@ class _$SearchAction extends SearchAction {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SearchAction')..add('term', term))
+    return (newBuiltValueToStringHelper(r'SearchAction')..add('term', term))
         .toString();
   }
 }
@@ -73,11 +73,13 @@ class SearchActionBuilder
   }
 
   @override
-  _$SearchAction build() {
+  SearchAction build() => _build();
+
+  _$SearchAction _build() {
     final _$result = _$v ??
         new _$SearchAction._(
             term: BuiltValueNullFieldError.checkNotNull(
-                term, 'SearchAction', 'term'));
+                term, r'SearchAction', 'term'));
     replace(_$result);
     return _$result;
   }
@@ -89,10 +91,10 @@ class _$TextChangedAction extends TextChangedAction {
 
   factory _$TextChangedAction(
           [void Function(TextChangedActionBuilder)? updates]) =>
-      (new TextChangedActionBuilder()..update(updates)).build();
+      (new TextChangedActionBuilder()..update(updates))._build();
 
   _$TextChangedAction._({required this.term}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(term, 'TextChangedAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(term, r'TextChangedAction', 'term');
   }
 
   @override
@@ -116,7 +118,8 @@ class _$TextChangedAction extends TextChangedAction {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TextChangedAction')..add('term', term))
+    return (newBuiltValueToStringHelper(r'TextChangedAction')
+          ..add('term', term))
         .toString();
   }
 }
@@ -152,11 +155,13 @@ class TextChangedActionBuilder
   }
 
   @override
-  _$TextChangedAction build() {
+  TextChangedAction build() => _build();
+
+  _$TextChangedAction _build() {
     final _$result = _$v ??
         new _$TextChangedAction._(
             term: BuiltValueNullFieldError.checkNotNull(
-                term, 'TextChangedAction', 'term'));
+                term, r'TextChangedAction', 'term'));
     replace(_$result);
     return _$result;
   }
@@ -170,13 +175,13 @@ class _$SearchLoadingAction extends SearchLoadingAction {
 
   factory _$SearchLoadingAction(
           [void Function(SearchLoadingActionBuilder)? updates]) =>
-      (new SearchLoadingActionBuilder()..update(updates)).build();
+      (new SearchLoadingActionBuilder()..update(updates))._build();
 
   _$SearchLoadingAction._({required this.term, required this.nextPage})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(term, 'SearchLoadingAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(term, r'SearchLoadingAction', 'term');
     BuiltValueNullFieldError.checkNotNull(
-        nextPage, 'SearchLoadingAction', 'nextPage');
+        nextPage, r'SearchLoadingAction', 'nextPage');
   }
 
   @override
@@ -203,7 +208,7 @@ class _$SearchLoadingAction extends SearchLoadingAction {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SearchLoadingAction')
+    return (newBuiltValueToStringHelper(r'SearchLoadingAction')
           ..add('term', term)
           ..add('nextPage', nextPage))
         .toString();
@@ -246,13 +251,15 @@ class SearchLoadingActionBuilder
   }
 
   @override
-  _$SearchLoadingAction build() {
+  SearchLoadingAction build() => _build();
+
+  _$SearchLoadingAction _build() {
     final _$result = _$v ??
         new _$SearchLoadingAction._(
             term: BuiltValueNullFieldError.checkNotNull(
-                term, 'SearchLoadingAction', 'term'),
+                term, r'SearchLoadingAction', 'term'),
             nextPage: BuiltValueNullFieldError.checkNotNull(
-                nextPage, 'SearchLoadingAction', 'nextPage'));
+                nextPage, r'SearchLoadingAction', 'nextPage'));
     replace(_$result);
     return _$result;
   }
@@ -266,13 +273,13 @@ class _$SearchSuccessAction extends SearchSuccessAction {
 
   factory _$SearchSuccessAction(
           [void Function(SearchSuccessActionBuilder)? updates]) =>
-      (new SearchSuccessActionBuilder()..update(updates)).build();
+      (new SearchSuccessActionBuilder()..update(updates))._build();
 
   _$SearchSuccessAction._({required this.term, required this.items})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(term, 'SearchSuccessAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(term, r'SearchSuccessAction', 'term');
     BuiltValueNullFieldError.checkNotNull(
-        items, 'SearchSuccessAction', 'items');
+        items, r'SearchSuccessAction', 'items');
   }
 
   @override
@@ -299,7 +306,7 @@ class _$SearchSuccessAction extends SearchSuccessAction {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SearchSuccessAction')
+    return (newBuiltValueToStringHelper(r'SearchSuccessAction')
           ..add('term', term)
           ..add('items', items))
         .toString();
@@ -343,13 +350,15 @@ class SearchSuccessActionBuilder
   }
 
   @override
-  _$SearchSuccessAction build() {
+  SearchSuccessAction build() => _build();
+
+  _$SearchSuccessAction _build() {
     _$SearchSuccessAction _$result;
     try {
       _$result = _$v ??
           new _$SearchSuccessAction._(
               term: BuiltValueNullFieldError.checkNotNull(
-                  term, 'SearchSuccessAction', 'term'),
+                  term, r'SearchSuccessAction', 'term'),
               items: items.build());
     } catch (_) {
       late String _$failedField;
@@ -358,7 +367,7 @@ class SearchSuccessActionBuilder
         items.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SearchSuccessAction', _$failedField, e.toString());
+            r'SearchSuccessAction', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -375,13 +384,13 @@ class _$SearchFailureAction extends SearchFailureAction {
 
   factory _$SearchFailureAction(
           [void Function(SearchFailureActionBuilder)? updates]) =>
-      (new SearchFailureActionBuilder()..update(updates)).build();
+      (new SearchFailureActionBuilder()..update(updates))._build();
 
   _$SearchFailureAction._({required this.term, required this.error})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(term, 'SearchFailureAction', 'term');
+    BuiltValueNullFieldError.checkNotNull(term, r'SearchFailureAction', 'term');
     BuiltValueNullFieldError.checkNotNull(
-        error, 'SearchFailureAction', 'error');
+        error, r'SearchFailureAction', 'error');
   }
 
   @override
@@ -408,7 +417,7 @@ class _$SearchFailureAction extends SearchFailureAction {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SearchFailureAction')
+    return (newBuiltValueToStringHelper(r'SearchFailureAction')
           ..add('term', term)
           ..add('error', error))
         .toString();
@@ -451,16 +460,18 @@ class SearchFailureActionBuilder
   }
 
   @override
-  _$SearchFailureAction build() {
+  SearchFailureAction build() => _build();
+
+  _$SearchFailureAction _build() {
     final _$result = _$v ??
         new _$SearchFailureAction._(
             term: BuiltValueNullFieldError.checkNotNull(
-                term, 'SearchFailureAction', 'term'),
+                term, r'SearchFailureAction', 'term'),
             error: BuiltValueNullFieldError.checkNotNull(
-                error, 'SearchFailureAction', 'error'));
+                error, r'SearchFailureAction', 'error'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

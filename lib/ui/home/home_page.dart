@@ -1,3 +1,4 @@
+import 'package:did_change_dependencies/did_change_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_pattern/flutter_bloc_pattern.dart';
 import 'package:flutter_disposebag/flutter_disposebag.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_github_search_rx_redux/ui/home/repo_items.dart';
 import 'package:flutter_provider/flutter_provider.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rx_redux/rx_redux.dart';
+import 'package:rxdart_ext/rxdart_ext.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -17,7 +19,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
+class _MyHomePageState extends State<MyHomePage>
+    with DisposeBagMixin, DidChangeDependenciesStream {
   late final store = createStore(Provider.of<SearchUseCase>(context));
   Object? subscribedStore;
 
@@ -29,16 +32,20 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
         .select((state) => state.page)
         .listen((page) => print('Page: $page'))
         .disposedBy(bag);
-  }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    subscribedStore ??= store.actionStream.listen((action) {
+    didChangeDependencies$
+        .exhaustMap((_) => store.actionStream)
+        .listen((action) {
       if (action is SearchFailureAction) {
         print(action.error);
         context.snackBar('Error occurred');
+        return;
+      }
+      if (action is SearchSuccessAction) {
+        if (action.items.isEmpty) {
+          context.snackBar('Loaded all items');
+        }
+        return;
       }
     }).disposedBy(bag);
   }
@@ -92,13 +99,15 @@ class _MyHomePageState extends State<MyHomePage> with DisposeBagMixin {
             child: RxStreamBuilder<HomeState>(
               stream: store.stateStream,
               builder: (context, state) {
-                if (state!.isLoading && state.isFirstPage) {
+                if (state.isLoading && state.isFirstPage) {
                   return Center(
                     child: SizedBox(
                       width: 56,
                       height: 56,
                       child: LoadingIndicator(
-                        color: Theme.of(context).accentColor,
+                        colors: [
+                          Theme.of(context).colorScheme.secondary,
+                        ],
                         indicatorType: Indicator.ballScaleMultiple,
                       ),
                     ),

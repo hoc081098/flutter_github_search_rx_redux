@@ -1,6 +1,5 @@
 import 'package:flutter_github_search_rx_redux/domain/search_usecase.dart';
 import 'package:rx_redux/rx_redux.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_ext/rxdart_ext.dart';
 
 import 'home_action.dart';
@@ -96,8 +95,8 @@ class HomeSideEffects {
         )
         .startWith(loadingAction)
         .onErrorReturnWith(
-          (error) => SearchFailureAction((b) => b
-            ..error = error
+          (e, s) => SearchFailureAction((b) => b
+            ..error = e
             ..term = term),
         );
   }
