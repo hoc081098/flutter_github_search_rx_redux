@@ -87,7 +87,7 @@ class HomeSideEffects {
       ..term = term
       ..nextPage = nextPage);
 
-    return Rx.fromCallable(() => _searchUseCase(term: term, page: nextPage))
+    return _searchUseCase(term: term, page: nextPage)
         .map<HomeAction>(
           (items) => SearchSuccessAction((b) => b
             ..term = term

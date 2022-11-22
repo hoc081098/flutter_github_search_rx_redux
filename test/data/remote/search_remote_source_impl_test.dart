@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dart_either/dart_either.dart';
 import 'package:flutter_github_search_rx_redux/data/remote/search_remote_source_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_client_hoc081098/http_client_hoc081098.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../mocks.mocks.dart';
+import '../../utils.dart';
 import 'data.dart';
 
 void main() {
@@ -36,14 +39,12 @@ void main() {
         'search/repositories',
         queryParameters: {'q': term, 'page': page.toString()},
       );
-      when(client.get(uri)).thenAnswer((_) async {
-        final body = jsonEncode(searchResult);
-        return http.Response(body, 200);
-      });
+      when(client.getJson(uri, cancelToken: anyNamed('cancelToken')))
+          .thenAnswer((_) async => searchResult.toJson());
 
-      final result = await remoteSource.search(term, page);
-      verify(client.get(uri)).called(1);
-      expect(result, searchResult);
+      await expectSingle(remoteSource.search(term, page), searchResult.right());
+      verify(client.getJson(uri, cancelToken: anyNamed('cancelToken')))
+          .called(1);
     });
 
     test('Search failed with status code is not 200', () async {
@@ -54,24 +55,21 @@ void main() {
         'search/repositories',
         queryParameters: {'q': term, 'page': page.toString()},
       );
-      when(client.get(uri)).thenAnswer((_) async {
+      when(client.getJson(uri, cancelToken: anyNamed('cancelToken')))
+          .thenAnswer((_) async {
         final body = jsonEncode({
           'message': 'Something was wrong',
           'status': 500,
         });
-        return http.Response(body, 500);
+        throw SimpleErrorResponseException(http.Response(body, 500));
       });
 
-      Object? error;
-      try {
-        await remoteSource.search(term, page);
-      } catch (e) {
-        error = e;
-      }
-
-      verify(client.get(uri)).called(1);
-      expect(error, isNotNull);
-      expect(error, const TypeMatcher<HttpException>());
+      await expectSingle(
+        remoteSource.search(term, page),
+        isA<SimpleErrorResponseException>().left(),
+      );
+      verify(client.getJson(uri, cancelToken: anyNamed('cancelToken')))
+          .called(1);
     });
 
     test('Search failed without response', () async {
@@ -83,27 +81,23 @@ void main() {
         'search/repositories',
         queryParameters: {'q': term, 'page': page.toString()},
       );
-      when(client.get(uri)).thenAnswer((_) async {
+      when(client.getJson(uri, cancelToken: anyNamed('cancelToken')))
+          .thenAnswer((_) async {
         throw SocketException(errorMessage);
       });
 
-      Object? error;
-      try {
-        await remoteSource.search(term, page);
-      } catch (e) {
-        error = e;
-      }
-
-      verify(client.get(uri)).called(1);
-      expect(error, isNotNull);
-      expect(
-        error,
-        const TypeMatcher<SocketException>().having(
-          (e) => e.message,
-          'SocketException.message',
-          errorMessage,
-        ),
+      await expectSingle(
+        remoteSource.search(term, page),
+        isA<SocketException>()
+            .having(
+              (e) => e.message,
+              'SocketException.message',
+              errorMessage,
+            )
+            .left(),
       );
+      verify(client.getJson(uri, cancelToken: anyNamed('cancelToken')))
+          .called(1);
     });
   });
 }

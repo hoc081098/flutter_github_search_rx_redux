@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cupertino_http/cupertino_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_github_search_rx_redux/data/remote/color_remote_source_impl.dart';
 import 'package:flutter_github_search_rx_redux/data/remote/search_remote_source_impl.dart';
@@ -6,12 +10,34 @@ import 'package:flutter_github_search_rx_redux/domain/search_repo.dart';
 import 'package:flutter_github_search_rx_redux/domain/search_usecase.dart';
 import 'package:flutter_provider/flutter_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_client_hoc081098/http_client_hoc081098.dart';
 
 import 'data/remote/mapper.dart';
 import 'ui/home/home_page.dart';
 
 void main() {
-  final client = http.Client();
+  final loggingInterceptor = SimpleLoggingInterceptor(
+    SimpleLogger(
+      loggerFunction: print,
+      level: kReleaseMode ? SimpleLogLevel.none : SimpleLogLevel.body,
+    ),
+  );
+
+  final client = SimpleHttpClient(
+    client: Platform.isIOS || Platform.isMacOS
+        ? CupertinoClient.defaultSessionConfiguration()
+        : http.Client(),
+    timeout: const Duration(seconds: 20),
+    requestInterceptors: [
+      // others interceptors above this line
+      loggingInterceptor.requestInterceptor,
+    ],
+    responseInterceptors: [
+      loggingInterceptor.responseInterceptor,
+      // others interceptors below this line
+    ],
+  );
+
   const searchBaseUrl = 'api.github.com';
   final colorUrl =
       Uri.parse('https://github.com/ozh/github-colors/raw/master/colors.json');

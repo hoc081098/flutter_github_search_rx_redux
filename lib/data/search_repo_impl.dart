@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_github_search_rx_redux/data/remote/color_remote_source.dart';
 import 'package:flutter_github_search_rx_redux/data/remote/search_result.dart';
+import 'package:rxdart_ext/single.dart';
 
 import '../domain/repo_item.dart';
 import '../domain/search_repo.dart';
@@ -21,18 +22,13 @@ class SearchRepositoryImpl implements SearchRepository {
   );
 
   @override
-  Future<BuiltList<RepoItem>> searchBy({
+  Single<BuiltList<RepoItem>> searchBy({
     required String term,
     required int page,
-  }) {
-    return Future.wait([
-      _searchRemoteSource.search(term, page),
-      _colorRemoteSource.getColors(),
-    ]).then(
-      (values) => _searchResultToRepoItems(
-        values[0] as SearchResult,
-        values[1] as BuiltMap<String, Color>,
-      ),
-    );
-  }
+  }) =>
+      RxSingles.forkJoin2(
+        _searchRemoteSource.search(term, page),
+        _colorRemoteSource.getColors(),
+        _searchResultToRepoItems,
+      );
 }
