@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:dart_either/dart_either.dart';
 import 'package:flutter_github_search_rx_redux/data/remote/color_remote_source_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_client_hoc081098/http_client_hoc081098.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../mocks.mocks.dart';
+import '../../utils.dart';
 import 'data.dart';
 
 void main() {
@@ -19,79 +22,70 @@ void main() {
 
     setUp(() {
       client = MockClient();
-      when(client.close()).thenAnswer((_) => Future.value(null));
       colorSource = ColorRemoteSourceImpl(client, url);
     });
 
-    tearDown(() => client.close());
-
     test('Get successful', () async {
-      when(client.get(url))
-          .thenAnswer((_) async => http.Response(jsonEncode(colorsRaw), 200));
+      when(client.getJson(url, cancelToken: anyNamed('cancelToken')))
+          .thenAnswer((_) async => colorsRaw);
 
-      final result = await colorSource.getColors();
-      verify(client.get(url)).called(1);
-      expect(result, colors);
+      await expectSingle(colorSource.getColors(), colors.right());
+      verify(client.getJson(url, cancelToken: anyNamed('cancelToken')))
+          .called(1);
     });
 
     test('Get from cached instead of making request', () async {
-      when(client.get(url))
-          .thenAnswer((_) async => http.Response(jsonEncode(colorsRaw), 200));
+      when(client.getJson(url, cancelToken: anyNamed('cancelToken')))
+          .thenAnswer((_) async => colorsRaw);
 
-      expect(await colorSource.getColors(), colors);
-      verify(client.get(url)).called(1);
+      await expectSingle(colorSource.getColors(), colors.right());
+      verify(client.getJson(url, cancelToken: anyNamed('cancelToken')))
+          .called(1);
 
-      expect(await colorSource.getColors(), colors);
-      verifyNever(client.get(url));
+      await expectSingle(colorSource.getColors(), colors.right());
+      verifyNever(client.getJson(url, cancelToken: anyNamed('cancelToken')));
 
-      expect(await colorSource.getColors(), colors);
-      verifyNever(client.get(url));
+      await expectSingle(colorSource.getColors(), colors.right());
+      verifyNever(client.getJson(url, cancelToken: anyNamed('cancelToken')));
     });
 
     test('Get failed with status code is not 200', () async {
-      when(client.get(url)).thenAnswer((_) async {
+      when(client.getJson(url, cancelToken: anyNamed('cancelToken')))
+          .thenAnswer((_) async {
         final body = jsonEncode({
           'message': 'Something was wrong',
           'status': 500,
         });
-        return http.Response(body, 500);
+        throw SimpleErrorResponseException(http.Response(body, 500));
       });
 
-      Object? error;
-      try {
-        await colorSource.getColors();
-      } catch (e) {
-        error = e;
-      }
-
-      verify(client.get(url)).called(1);
-      expect(error, isNotNull);
-      expect(error, const TypeMatcher<HttpException>());
+      await expectSingle(
+        colorSource.getColors(),
+        isA<SimpleErrorResponseException>().left(),
+      );
+      verify(client.getJson(url, cancelToken: anyNamed('cancelToken')))
+          .called(1);
     });
 
     test('Get failed without response', () async {
       const errorMessage = 'This is socket exception!';
 
-      when(client.get(url))
+      when(client.getJson(url, cancelToken: anyNamed('cancelToken')))
           .thenAnswer((_) async => throw SocketException(errorMessage));
 
-      Object? error;
-      try {
-        await colorSource.getColors();
-      } catch (e) {
-        error = e;
-      }
-
-      verify(client.get(url)).called(1);
-      expect(error, isNotNull);
-      expect(
-        error,
-        const TypeMatcher<SocketException>().having(
-          (e) => e.message,
-          'SocketException.message',
-          errorMessage,
-        ),
+      await expectSingle(
+        colorSource.getColors(),
+        isA<SocketException>()
+            .having(
+              (e) => e.message,
+              'SocketException.message',
+              errorMessage,
+            )
+            .left(),
       );
+
+      verify(client.getJson(url, cancelToken: anyNamed('cancelToken')))
+          .called(1);
     });
 
     test('colorFromHex', () {

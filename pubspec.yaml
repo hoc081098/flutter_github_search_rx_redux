@@ -16,25 +16,36 @@ dependencies:
   did_change_dependencies: ^1.0.0
 
   built_collection: ^5.1.1
-  rxdart: ^0.27.5
-  http: ^0.13.4
-  built_value: ^8.4.0
-  url_launcher: ^6.1.5
+  rxdart: ^0.27.7
+  http: ^0.13.5
+  built_value: ^8.4.2
+  url_launcher: ^6.1.7
   loading_indicator: ^3.1.0
+  cancellation_token_hoc081098: ^1.0.0
+  http_client_hoc081098:
+  cupertino_http: ^0.0.9
 
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.5
 
 dev_dependencies:
-  mockito: ^5.2.0
+  dart_either: ^1.0.0
+  mockito: ^5.3.2
   pedantic: ^1.11.1
-  built_value_generator: ^8.4.0
-  build_runner: ^2.2.0
+  built_value_generator: ^8.4.2
+  build_runner: ^2.3.2
   flutter_test:
     sdk: flutter
+
+dependency_overrides:
+  http_client_hoc081098:
+    git:
+      url: https://github.com/hoc081098/http_client_hoc081098.git
+      ref: c13fc534ab6d7a63e79ae347fd7c877cd42615ac
 
 flutter:
   uses-material-design: true
   assets:
     - assets/icons8-github-96.png
+

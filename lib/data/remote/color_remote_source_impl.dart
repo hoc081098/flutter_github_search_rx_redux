@@ -1,15 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:built_collection/built_collection.dart';
-import 'package:http/http.dart' as http;
+import 'package:http_client_hoc081098/http_client_hoc081098.dart';
 import 'package:meta/meta.dart';
+import 'package:rxdart_ext/rxdart_ext.dart';
 
 import 'color_remote_source.dart';
 
 class ColorRemoteSourceImpl implements ColorRemoteSource {
-  final http.Client _client;
+  final SimpleHttpClient _client;
   final Uri _url;
 
   BuiltMap<String, Color>? _cachedColors;
@@ -17,32 +16,32 @@ class ColorRemoteSourceImpl implements ColorRemoteSource {
   ColorRemoteSourceImpl(this._client, this._url);
 
   @override
-  Future<BuiltMap<String, Color>> getColors() async {
-    if (_cachedColors != null) {
-      return _cachedColors!;
-    }
+  Single<BuiltMap<String, Color>> getColors() {
+    return Single.defer(() {
+      if (_cachedColors != null) {
+        return Single.value(_cachedColors!);
+      }
 
-    final response = await _client.get(_url);
+      return useCancellationToken((cancelToken) async {
+        final json = await _client.getJson(_url, cancelToken: cancelToken)
+            as Map<String, dynamic>;
 
-    if (response.statusCode != HttpStatus.ok) {
-      throw HttpException(
-        'Get colors failed failed with status code: ${response.statusCode}',
-        uri: _url,
-      );
-    }
-
-    return _cachedColors =
-        ((jsonDecode(response.body) as Map).map((key, value) {
-      final color = value['color'];
-      return MapEntry(
-        key as String,
-        color is String ? colorFromHex(color) : null,
-      );
-    })
-              ..removeWhere((key, value) => value == null))
-            .cast<String, Color>()
-            .build();
+        return _cachedColors = _toColorMap(json);
+      });
+    });
   }
+
+  static BuiltMap<String, Color> _toColorMap(Map<String, dynamic> json) =>
+      (json.map((key, value) {
+        final color = value['color'];
+        return MapEntry(
+          key,
+          color is String ? colorFromHex(color) : null,
+        );
+      })
+            ..removeWhere((key, value) => value == null))
+          .cast<String, Color>()
+          .build();
 
   @visibleForTesting
   static Color colorFromHex(String hex) {
