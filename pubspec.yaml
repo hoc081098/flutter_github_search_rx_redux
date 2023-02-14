@@ -19,7 +19,7 @@ dependencies:
   rxdart: ^0.27.7
   http: ^0.13.5
   built_value: ^8.4.2
-  url_launcher: ^6.1.7
+  url_launcher: ^6.1.9
   loading_indicator: ^3.1.0
   cancellation_token_hoc081098: ^1.0.0
   http_client_hoc081098:
